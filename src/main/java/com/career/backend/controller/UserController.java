@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping({"/api/users", "/users"})
 @RequiredArgsConstructor
 public class UserController {
 
@@ -24,7 +24,8 @@ public class UserController {
             // api.js expects: resolve({ data: { user: users[userIndex] } });
             return ResponseEntity.ok(Map.of("user", user));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
+            String msg = e.getMessage() != null ? e.getMessage() : "Unknown error occurred";
+            return ResponseEntity.badRequest().body(Map.of("message", msg));
         }
     }
 
